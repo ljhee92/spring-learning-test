@@ -36,11 +36,13 @@ public class RepositoryTest {
 
     @Test
     void findById() {
-        entityManager.persist(new Customer("Jack", "Bauer"));
-        entityManager.persist(new Customer("Chloe", "O'Brian"));
+        Customer jack = new Customer("Jack", "Bauer");
+        Customer chloe = new Customer("Chloe", "O'Brian");
+        entityManager.persist(jack);
+        entityManager.persist(chloe);
 
-        Customer customer = customerRepository.findById(1L).orElseThrow(IllegalArgumentException::new);
-        assertThat(customer.getFirstName()).isEqualTo("Jack");
+        Customer customer = customerRepository.findById(jack.getId()).orElseThrow(IllegalArgumentException::new);
+        assertThat(customer.getFirstName()).isEqualTo(jack.getFirstName());
     }
 
     @Test
@@ -54,10 +56,12 @@ public class RepositoryTest {
 
     @Test
     void delete() {
-        entityManager.persist(new Customer("Jack", "Bauer"));
-        entityManager.persist(new Customer("Chloe", "O'Brian"));
+        Customer jack = new Customer("Jack", "Bauer");
+        Customer chloe = new Customer("Chloe", "O'Brian");
+        entityManager.persist(jack);
+        entityManager.persist(chloe);
 
-        customerRepository.deleteById(1L);
+        customerRepository.deleteById(jack.getId());
         assertThat(customerRepository.count()).isEqualTo(1);
     }
 }

@@ -34,10 +34,12 @@ public class EntityManagerTest {
      */
     @Test
     void flush() {
-        String sqlForSelectCustomer = "select * from customer where id = 1";
-
         Customer customer = new Customer("Jack", "Bauer");
         entityManager.persist(customer);
+
+        Long id = customer.getId();
+        String sqlForSelectCustomer = "select * from customer where id = " + id;
+
         customer.updateFirstName("Danial");
 
         Customer savedCustomer = jdbcTemplate.query(sqlForSelectCustomer, rs -> {
